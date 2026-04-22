@@ -1,7 +1,18 @@
-import React , {use, useEffect, useState} from 'react'
-import {Link, useParams } from 'react-router-dom'
+import React , { useEffect, useState} from 'react'
+import { Link, useParams } from 'react-router-dom'
 import { dummyResumeData } from '../assets/assets'
 import { ArrowLeftIcon, Briefcase, ChevronLeft, ChevronRight, FileText, FolderIcon, GraduationCap, Sparkles, User } from 'lucide-react'
+import ResumePreview from '../components/ResumePreview'
+import PersonalInfoForm from "../components/PersonalInfoForm";
+import TemplateSelector from "../components/TemplateSelector.jsx";
+import ColorPicker from '../components/ColorPicker.jsx'
+import ProfessionalSummaryForm from '../components/ProfessionalSummaryForm.jsx'
+import ExperienceForm from '../components/ExperienceForm.jsx'
+import EducationForm from '../components/EducationForm.jsx'
+import ProjectForm from '../components/ProjectForm.jsx'
+
+
+
 
 const ResumeBuilder =()=> {
 
@@ -11,7 +22,7 @@ const ResumeBuilder =()=> {
     _id: '',
     title: '',
     personal_info:{},
-    prefessional_summary:" ",
+    professional_summary:"",
     experience:[],
     project:[],
     skills:[],
@@ -61,14 +72,19 @@ const ResumeBuilder =()=> {
           <div className='relative lg:col-span-5 rounded-lg overflow-hidden'>
             <div className='bg-white rounded-lg shadow-sm border-gray-200 p-6 pt-1'>
               {/* progress bar using activeSectionIndex */}
-              <hr className='absolute top-0 lest-0 right-0 border-2 border-gray-200'/>
-              <hr className='absolute top-0 lest-0 h-1 bg-gradient-to-r from-indigo-500 to-indigo-600 border-none transition-all duration-2000'
+              <hr className='absolute top-0 left-0 right-0 border-2 border-gray-200'/>
+              <hr className='absolute top-0 left-0 h-1 bg-gradient-to-r from-indigo-500 to-indigo-600 border-none transition-all duration-2000'
               style={{width:`${activeSectionIndex*100/(sections.length-1)}%`} }/>
 
 
               {/* Section Navigation */}
               <div className='flex justify-between items-center mb-6 border-b border-gray-300 py-1'>
-                <div></div>
+                <div className='flex  items-center gap-2'>
+                  <TemplateSelector selectedTemplate={resumeData.template}
+                  onChange ={(template)=>setResumeData(prev=>({...prev, template:template}))}/>
+                  <ColorPicker selectedColor={resumeData.accent_color} onChange={(color)=>setResumeData(prev=>({...prev, accent_color:color}))}/>
+                </div>
+
                 <div className='flex items-center'>
                   {activeSectionIndex!==0 && (
                     <button onClick={()=> setActiveSectionIndex((prevIndex)=> Math.max(prevIndex -1, 0))} className='flex items-center gap-1 p-3 
@@ -87,14 +103,57 @@ const ResumeBuilder =()=> {
               </div>
 
               {/* Form Content */}
-              <div></div>
+              <div className='space-y-6'>
+                {activeSection.id === 'personal' && (
+                  <PersonalInfoForm data={resumeData.personal_info} onChange={(data)=>setResumeData(prev=>({...prev, personal_info:data}))} 
+                  removeBackground={removeBackground}
+                  setRemoveBackground={setRemoveBackground}/>
+                )}
+
+                {
+                  activeSection.id === 'summary' && (
+                    <ProfessionalSummaryForm data={resumeData.professional_summary}
+                    onChange={(data)=>setResumeData(prev=>({...prev, professional_summary:data}))}
+                    setResumeData={setResumeData}/>
+                  )
+                }
+
+                {
+                  activeSection.id === 'experience' && (
+                    <ExperienceForm data={resumeData.experience}
+                    onChange={(data)=>setResumeData(prev=>({...prev, experience:data}))}/>
+                  )
+                }
+
+                {
+                  activeSection.id === 'education' && (
+                    <EducationForm data={resumeData.education}
+                    onChange={(data)=>setResumeData(prev=>({...prev, education:data}))}/>
+                  )
+                }
+
+                {
+                  activeSection.id === 'projects' && (
+                    <ProjectForm data={resumeData.project}
+                    onChange={(data)=>setResumeData(prev=>({...prev, project:data}))}/>
+                  )
+                }
+                
+              </div>
             </div>
           </div>
 
           {/* Right Panel - Preview */}
-          <div></div>
-        </div>
+          <div className="lg:col-span-7 max-lg:mt-6">
+            <div>
+              {/* buttons */}
 
+            </div>
+
+            <ResumePreview data={resumeData} template={resumeData.template}
+            accentColor={resumeData.accent_color} />
+          </div>
+        </div>
       </div>
 
     </div>

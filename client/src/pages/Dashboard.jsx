@@ -55,7 +55,7 @@ const Dashboard = () => {
 
           <button onClick={() => setShowCreateResume(true)} className='w-full bg-white sm:max-w-36 h-48 flex flex-col items-center justify-center rounded-lg gap-2 text-slate-600 border border-dashed border-slate-300 group hover:border-indigo-500 hover:shadow-lg transition-all duration-300 cursor-pointer'>
             <PlusIcon className='size-11 transition-all duration-300  p-2.5 bg-gradient-to-br from-indigo-300 to-indigo-500 text-white rounded-full' />
-            <p className='text-sm group-hover:text-indigo-600' transition-all duration-300>Create Resume</p>
+            <p className='text-sm group-hover:text-indigo-600 transition-all duration-300' >Create Resume</p>
           </button>
 
           <button onClick={() => setShowUploadResume(true)} className='w-full bg-white sm:max-w-36 h-48 flex flex-col items-center justify-center rounded-lg gap-2 text-slate-600 border border-dashed border-slate-300 group hover:border-purple-500 hover:shadow-lg transition-all duration-300 cursor-pointer'>
@@ -76,7 +76,7 @@ const Dashboard = () => {
 
                 <FilePenLineIcon className='size-7 group-hover:scale-105 transition-all' style={{ color: baseColor }} />
                 <p className='text-sm group-hover:scale-105 transition-all px-2 text-center' style={{ color: baseColor }}>{resume.title}</p>
-                <p className='absolute bottom-1 text-[11px]  taxt-slate-400 group-hover:text-slate-500 transition-all duration-300 px-2 text-center' style={{ color: baseColor + '90' }}>
+                <p className='absolute bottom-1 text-[11px]  text-slate-400 group-hover:text-slate-500 transition-all duration-300 px-2 text-center' style={{ color: baseColor + '90' }}>
                 Update on {new Date(resume.updatedAt).toLocaleDateString()} </p>
 
                 <div onClick={e => e.stopPropagation()} className='absolute top-1 right-1 group-hover:flex items-center hidden'>
