@@ -5,16 +5,16 @@ const connectDB = async()=>{
         mongoose.connection.on("connected", ()=>{console.log("Database connected successfully")})
 
         let mongodbURL = process.env.MONGODB_URI
-        const projectNmae=' Ai-Career-Guidance-system';
+        const projectName='Ai-Career-Guidance-system';
 
-        if(!mongodbURI){
+        if(!mongodbURL){
             throw new Error("MONGODB_URI environment variable not set")
         }
 
-        if(mongodbURI.endswith('/')){
-            mongodbURI = mongodbURI.slice(0, -1)
+        if(mongodbURL.endsWith('/')){
+            mongodbURL = mongodbURL.slice(0, -1)
         }
-        await mongoose.connect(`${mongodbURI}/${projectName}`)
+        await mongoose.connect(`${mongodbURL}/${projectName}`)
     } 
     catch(error){
         console.error("Error connecting to MongoDB:", error)
